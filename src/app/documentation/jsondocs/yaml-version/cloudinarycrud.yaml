@@ -1,0 +1,180 @@
+openapi: 3.0.0
+info:
+  title: Cloudinary CRUD Operations API
+  description: |
+    Welcome to Cloudinary CRUD Operations MERN Stack Application!
+
+    Greetings, Developers!
+
+    We're thrilled to introduce you to the Cloudinary CRUD Operations MERN Stack Application – your ultimate companion for seamlessly managing images on the web. Crafted with care and powered by MongoDB, Express.js, React.js, and Node.js, this application simplifies image operations with a focus on Create, Read, Update, and Delete (CRUD) functionalities.
+
+    ## What's Inside?
+
+    ### **Image Operations Simplified**
+    The Cloudinary CRUD Operations app is designed to streamline the way you handle images online. Whether you're uploading new visuals, reviewing existing ones, adjusting details, or deleting images – this application has you covered.
+
+    ### **Cloudinary Magic**
+    The magic unfolds with Cloudinary, a powerful tool that stores and manages your images effortlessly in the cloud. Imagine having a seamless solution that simplifies the intricacies of image management.
+
+    ### **Organized Backend with MongoDB**
+    Behind the scenes, MongoDB takes charge, ensuring all your image-related data is impeccably organized. The robust combination of Express.js and Node.js handles the server-side intricacies with finesse.
+
+    ### **User-Friendly Interface with React.js**
+    On the frontend, React.js steps in, providing an intuitive and user-friendly interface. Interact with your images effortlessly, making the entire experience smooth and enjoyable.
+
+    ## Why Choose Cloudinary CRUD Operations MERN Stack?
+
+    In a nutshell, our application is your go-to assistant for managing images on the web. It's not just practical and straightforward; it transforms image management into a walk in the park for both businesses and developers alike.
+
+    Join us on this exciting journey of simplifying image operations! Happy coding!
+
+  version: 1.0.0
+
+
+servers:
+  - url: http://localhost:5000
+    description: Local server
+  - url: https://cloudinarycrud.onrender.com/
+    description: Production server
+
+paths:
+  /user:
+    post:
+      tags:
+        - User
+      summary: Create a new user
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                image:
+                  type: string
+                  format: binary
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Varun
+                image:
+                  type: string
+                  format: binary
+                  example: book.png
+      responses:
+        '200':
+          description: User created successfully
+        '400':
+          description: Bad request
+
+    get:
+      tags:
+        - User
+      summary: Get all users
+      responses:
+        '200':
+          description: Users retrieved successfully
+          content:
+            application/json:
+              example:
+                - _id: 12345
+                  name: John Doe
+                  avatar: https://cloudinary.com/image/12345.jpg
+                  cloudinary_id: 12345
+                - _id: 67890
+                  name: Jane Smith
+                  avatar: https://cloudinary.com/image/67890.jpg
+                  cloudinary_id: 67890
+
+  /user/{id}:
+    get:
+      tags:
+        - User
+      summary: Get a user by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User retrieved successfully
+          content:
+            application/json:
+              example:
+                _id: 12345
+                name: John Doe
+                avatar: https://cloudinary.com/image/12345.jpg
+                cloudinary_id: 12345
+        '404':
+          description: User not found
+    put:
+      tags:
+        - User
+      summary: Update a user by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Varun
+                image:
+                  type: string
+                  format: binary
+                  example: book.png
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Varun
+                image:
+                  type: string
+                  format: binary
+                  example: book.png
+      responses:
+        '200':
+          description: User updated successfully
+          content:
+            application/json:
+              example:
+                _id: 12345
+                name: Updated Name
+                avatar: https://cloudinary.com/image/updated.jpg
+                cloudinary_id: updated
+        '404':
+          description: User not found
+    delete:
+      tags:
+        - User
+      summary: Delete a user by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User deleted successfully
+        '404':
+          description: User not found
+
+
