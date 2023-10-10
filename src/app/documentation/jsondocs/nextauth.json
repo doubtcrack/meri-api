@@ -1,0 +1,410 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "NextAuth API Documentation",
+    "version": "1.0.0",
+    "description": "Welcome to the Next.js Authentication System API Documentation! This authentication solution is meticulously crafted to streamline user authentication in your projects. Leveraging the power of ReactJS, Next.js, TypeScript, and Next Auth, this system offers a robust set of features, including user login, registration, password recovery, and more.\n\nKey Features:\n- Versatility: A versatile solution catering to various authentication needs in your applications.\n- Technology Stack: Built on Next.js, TypeScript, and Next Auth for strong typing and efficient server-side rendering.\n- Authentication Options: Securely implement login with credentials, Google, and GitHub.\n- Form Validation: Utilizes React Hook Form and Zod for robust form validation, ensuring data accuracy and a seamless user experience.\n- Styling: Tailwind CSS is employed for attractive and responsive design.\n\nBeyond Authentication:\n- Optimized Registration: Stringent validation on both frontend and backend for an optimized user registration process.\n- Social Platform Integration: Seamlessly integrates with popular social platforms for enhanced user engagement.\n- Token Management: Securely manages tokens via emails, ensuring data security.\n- Email Sending: Enables email sending through Nodemailer and SMTP services like Gmail, enhancing communication capabilities.\n\nIncorporate this Next.js Authentication System into your projects for a secure, efficient, and user-friendly authentication experience. Explore our API documentation to harness the full potential of this powerful solution.\n"
+  },
+  "externalDocs": {
+    "description": "Find out more about NextJS Authentication System here",
+    "url": "https://tksuryavanshi.blogspot.com/2023/09/reactjs-nextjs-authentication-system.html?m=1"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5000/",
+      "description": "Local server"
+    },
+    {
+      "url": "https://authentication-system-next-js.vercel.app/",
+      "description": "Production server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Auth Operations"
+    }
+  ],
+  "paths": {
+    "/api/auth/signin/{id}": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Sign in with Social Account",
+        "description": "Redirects to the social authentication provider.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The identifier for the social authentication provider."
+          }
+        ],
+        "responses": {
+          "302": {
+            "description": "Redirects to the social authentication provider."
+          }
+        }
+      }
+    },
+    "/api/auth/activate": {
+      "put": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Activate Account",
+        "description": "Activates a user account.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "token"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful account activation."
+          },
+          "400": {
+            "description": "Invalid or expired activation token."
+          }
+        }
+      }
+    },
+    "/api/auth/signin/email": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "User Login",
+        "description": "Logs in a user with email and password.",
+        "operationId": "loginUser",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "description": "The user email for login",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "password",
+            "in": "query",
+            "description": "The password for login in clear text",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "csrfToken": {
+                    "type": "string",
+                    "example": "your_csrf_token_here"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "john@example.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "user_password_here"
+                  }
+                },
+                "required": [
+                  "csrfToken",
+                  "email",
+                  "password"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful login."
+          },
+          "401": {
+            "description": "Unauthorized. Invalid credentials."
+          }
+        }
+      }
+    },
+    "/api/auth/signup": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "User Registration",
+        "description": "Registers a new user.",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "query",
+            "description": "name of user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "email",
+            "in": "query",
+            "description": "user email",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "phone number",
+            "in": "query",
+            "description": "user contact number",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "password",
+            "in": "query",
+            "description": "The password for login in clear text",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful registration."
+          },
+          "400": {
+            "description": "Bad request. Invalid data provided."
+          }
+        }
+      }
+    },
+    "/api/auth/forgot": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Forgot Password",
+        "description": "Initiates the password reset process.",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "description": "The user email id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "email"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Reset link sent successfully."
+          },
+          "404": {
+            "description": "User not found."
+          }
+        }
+      }
+    },
+    "/api/auth/reset": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Reset Password",
+        "description": "Resets the user's password.",
+        "parameters": [
+          {
+            "name": "password",
+            "in": "query",
+            "description": "Enter your new Password",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "password": {
+                    "type": "string"
+                  },
+                  "token": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "password",
+                  "token"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Password reset successful."
+          },
+          "400": {
+            "description": "Bad request. Invalid data provided."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "required": [
+          "name",
+          "email",
+          "password",
+          "phone"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "objectId",
+            "example": "60c9585463525e45f8574c04"
+          },
+          "name": {
+            "type": "string",
+            "example": "John Doe"
+          },
+          "email": {
+            "type": "string",
+            "example": "john@example.com"
+          },
+          "image": {
+            "type": "string",
+            "example": "https://res.cloudinary.com/dmhcnhtng/image/upload/v1664642479/992490_sskqn3.png"
+          },
+          "password": {
+            "type": "string",
+            "example": "yourhashedpassword"
+          },
+          "emailVerified": {
+            "type": "boolean",
+            "example": false
+          },
+          "phone": {
+            "type": "string",
+            "example": "1234567890"
+          },
+          "role": {
+            "type": "string",
+            "example": "user"
+          }
+        },
+        "xml": {
+          "name": "user"
+        }
+      }
+    },
+    "requestBodies": {
+      "User": {
+        "description": "User Data",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/User"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "#/components/schemas/User"
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      },
+      "oauth2": {
+        "type": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://authentication-system-next-js.vercel.app/api/auth/signin",
+            "tokenUrl": "https://authentication-system-next-js.vercel.app/api/auth/callback",
+            "scopes": {
+              "openid": "Grant access to user info"
+            }
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    },
+    {
+      "oauth2": [
+        "openid"
+      ]
+    }
+  ]
+}

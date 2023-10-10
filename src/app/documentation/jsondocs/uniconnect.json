@@ -1,0 +1,2252 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "UniConnect API Documentation",
+    "version": "1.0.0",
+    "description": "Welcome to the UniConnect API documentation! **UniConnect** is more than just a platform; it's a vibrant community designed to enhance the lives of university students. Our mission is simple: to provide students with a convenient and efficient way to buy, sell, or trade used textbooks, stationery, and other study materials. With UniConnect, you have the power to connect with fellow students and support each other on your academic journey.\n\n\n## About UniConnect\n\n### Connecting Students, Building Community\n\nUniConnect is not just a marketplace; it's a place where students come together based on their needs and preferences. We believe in fostering a sense of community among students, creating an environment where you can find the materials you need and help others by passing on what you no longer require.\n\n### Sustainability and Environmental Impact\n\nAt UniConnect, we are committed to making a positive impact on the environment. By promoting the reuse of study materials, we contribute to sustainability efforts and help reduce waste on university campuses. Our platform is a win-win for both students and the planet.\n\n### Simplifying Student Life\n\nIn essence, UniConnect is here to simplify the process of buying and selling study materials for students. We provide affordable options, facilitate connections, and encourage a spirit of community. Join us in making student life more accessible, environmentally conscious, and enjoyable.\n\nWe're excited to have you on board and explore the UniConnect API. Let's work together to support students, build connections, and create a brighter, more sustainable future.\n\nWelcome to UniConnect!\n\n### Getting Started:\n  Explore the comprehensive API documentation below to integrate seamlessly with UniConnect. Whether you're a developer, partner, or enthusiast, this documentation rovides the necessary information to interact with UniConnect's API and unlock its full potential.\n"
+  },
+  "externalDocs": {
+    "description": "Find out more about UniConnect here",
+    "url": "https://tksuryavanshi.blogspot.com/2023/09/uniconnect.html"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5000/",
+      "description": "Local server"
+    },
+    {
+      "url": "https://uniconnect-server.onrender.com/",
+      "description": "Production server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "User",
+      "description": "All User Endpoint"
+    },
+    {
+      "name": "Conversation",
+      "description": "All Endpoints to conversation"
+    },
+    {
+      "name": "Message",
+      "description": "All Endpoints to message"
+    },
+    {
+      "name": "Order",
+      "description": "All Endpoints to order"
+    },
+    {
+      "name": "Shop",
+      "description": "All Endpoints to shop"
+    },
+    {
+      "name": "Product",
+      "description": "All Endpoints to product"
+    }
+  ],
+  "paths": {
+    "/api/v2/user/create-user": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Create a new user",
+        "description": "Uploads user profile image and sends an activation email.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Amit"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "techbuddy@gmail.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "easymood"
+                  },
+                  "file": {
+                    "type": "string",
+                    "example": "https://res.cloudinary.com/zzcsddss/image/upload/v1684867973/profile/g8emueu79pg6yz3pyevj.png"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User created successfully. Activation email sent."
+          },
+          "400": {
+            "description": "Invalid request data or image upload failed."
+          }
+        }
+      }
+    },
+    "/api/v2/user/activation": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Activate user account",
+        "description": "Activates a user account using an activation token.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "activation_token": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User account activated successfully."
+          },
+          "400": {
+            "description": "Invalid activation token or user already exists."
+          }
+        }
+      }
+    },
+    "/api/v2/user/login-user": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Log in user",
+        "description": "Log in an existing user.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "casipob466@mevori.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "Abcde@12345"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User logged in successfully."
+          },
+          "400": {
+            "description": "Invalid request data or user not found."
+          }
+        }
+      }
+    },
+    "/api/v2/user/getuser": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Get user information",
+        "description": "Retrieve user information for the authenticated user.",
+        "responses": {
+          "200": {
+            "description": "User information retrieved successfully."
+          },
+          "400": {
+            "description": "User not found."
+          }
+        }
+      }
+    },
+    "/api/v2/user/logout": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Log out user",
+        "description": "Log out the authenticated user by clearing the token.",
+        "responses": {
+          "200": {
+            "description": "User logged out successfully."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/api/v2/user/update-user-info": {
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Update user information",
+        "description": "Update user information such as name, email, and phone number.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "phoneNumber": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User information updated successfully."
+          },
+          "400": {
+            "description": "Invalid request data or password mismatch."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/api/v2/user/update-avatar": {
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Update user avatar",
+        "description": "Update user avatar image.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "image": {
+                    "type": "string",
+                    "example": "https://res.cloudinary.com/profile/g8emueu79pg6yz3pyevj.png"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User avatar updated successfully."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/api/v2/user/update-user-addresses": {
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Update user addresses",
+        "description": "Update or add user addresses.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "addressType": {
+                    "type": "string",
+                    "example": "Robert Robertson, 1234 NW Bobcat Lane, St. Robert, MO 65584-5678"
+                  },
+                  "_id": {
+                    "type": "string",
+                    "example": "userid"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User addresses updated successfully."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/api/v2/user/delete-user-address/{id}": {
+      "delete": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Delete user address",
+        "description": "Delete a user address by ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User address ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User address deleted successfully."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/api/v2/user/update-user-password": {
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Update user password",
+        "description": "Update user password.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "oldPassword": {
+                    "type": "string",
+                    "example": 123456
+                  },
+                  "newPassword": {
+                    "type": "string",
+                    "example": "ABCDE"
+                  },
+                  "confirmPassword": {
+                    "type": "string",
+                    "example": "ABCDE"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Password updated successfully."
+          },
+          "400": {
+            "description": "Invalid request data or old password incorrect."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/api/v2/user/user-info/{id}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Get user information by ID",
+        "description": "Retrieve user information by user ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "User information retrieved successfully."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/api/v2/user/admin-all-users": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Get all users (Admin)",
+        "description": "Retrieve information about all users. (Admin access only)",
+        "responses": {
+          "201": {
+            "description": "User information retrieved successfully."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/api/v2/user/delete-user/{id}": {
+      "delete": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Delete user by ID (Admin)",
+        "description": "Delete a user by ID. (Admin access only)",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "User deleted successfully."
+          },
+          "400": {
+            "description": "User not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/api/v2/conversation/create-new-conversation": {
+      "post": {
+        "tags": [
+          "Conversation"
+        ],
+        "summary": "Create a new conversation",
+        "responses": {
+          "201": {
+            "description": "Conversation created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "conversation": {
+                      "$ref": "#/components/schemas/Conversation"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/conversation/get-all-conversation-seller/{id}": {
+      "get": {
+        "tags": [
+          "Conversation"
+        ],
+        "summary": "Get seller conversations",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Seller ID"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Seller conversations retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "conversations": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Conversation"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/conversation/get-all-conversation-user/{id}": {
+      "get": {
+        "tags": [
+          "Conversation"
+        ],
+        "summary": "Get user conversations",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "User ID"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "User conversations retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "conversations": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Conversation"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/conversation/update-last-message/{id}": {
+      "put": {
+        "tags": [
+          "Conversation"
+        ],
+        "summary": "Update the last message in a conversation",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Conversation ID"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "lastMessage": {
+                    "type": "string",
+                    "example": "Hello, how are you?"
+                  },
+                  "lastMessageId": {
+                    "type": "string",
+                    "example": 123456789
+                  }
+                },
+                "required": [
+                  "lastMessage",
+                  "lastMessageId"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Last message updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "conversation": {
+                      "$ref": "#/components/schemas/Conversation"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/message/create-new-message": {
+      "post": {
+        "tags": [
+          "Message"
+        ],
+        "summary": "Create a new message",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "conversationId": {
+                    "type": "string",
+                    "example": "6470ffad2238b29846bc65bc"
+                  },
+                  "sender": {
+                    "type": "string",
+                    "example": "user123"
+                  },
+                  "text": {
+                    "type": "string",
+                    "example": "Hello, how are you?"
+                  },
+                  "images": {
+                    "type": "string",
+                    "format": "uri",
+                    "example": "https://res.cloudinary.com/example/image.jpg"
+                  }
+                },
+                "required": [
+                  "conversationId",
+                  "sender",
+                  "text"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Message created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "$ref": "#/components/schemas/Messages"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/message/get-all-messages/{id}": {
+      "get": {
+        "tags": [
+          "Message"
+        ],
+        "summary": "Get all messages with conversation ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Conversation ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Messages retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "messages": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Messages"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/order/create-order": {
+      "post": {
+        "tags": [
+          "Order"
+        ],
+        "summary": "Create a new order",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "cart": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Product"
+                    }
+                  },
+                  "user": {
+                    "type": "object",
+                    "$ref": "#/components/schemas/User"
+                  },
+                  "totalPrice": {
+                    "type": "number",
+                    "example": 250
+                  },
+                  "paymentInfo": {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "example": "Cash on Delivery"
+                      },
+                      "status": {
+                        "type": "string",
+                        "example": "Succeeded"
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "status"
+                    ]
+                  }
+                },
+                "required": [
+                  "cart",
+                  "shippingAddress",
+                  "user",
+                  "totalPrice",
+                  "paymentInfo"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Order created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "orders": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "success": {
+                            "type": "boolean",
+                            "example": true
+                          },
+                          "order": {
+                            "$ref": "#/components/schemas/Order"
+                          }
+                        },
+                        "required": [
+                          "success",
+                          "order"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "orders"
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/order/get-all-orders/{userId}": {
+      "get": {
+        "tags": [
+          "Order"
+        ],
+        "summary": "Get all orders of a user",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "userId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "User ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Orders retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "orders": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "success": {
+                            "type": "boolean",
+                            "example": true
+                          },
+                          "order": {
+                            "$ref": "#/components/schemas/Order"
+                          }
+                        },
+                        "required": [
+                          "success",
+                          "order"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "orders"
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/order/get-seller-all-orders/{shopId}": {
+      "get": {
+        "tags": [
+          "Order"
+        ],
+        "summary": "Get all orders of a seller",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "shopId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Shop ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Orders retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "orders": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "success": {
+                            "type": "boolean",
+                            "example": true
+                          },
+                          "order": {
+                            "$ref": "#/components/schemas/Order"
+                          }
+                        },
+                        "required": [
+                          "success",
+                          "order"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "orders"
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/order/update-order-status/{id}": {
+      "put": {
+        "tags": [
+          "Order"
+        ],
+        "summary": "Update order status for a seller",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Order ID"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "example": "Transferred to delivery partner"
+                  }
+                },
+                "required": [
+                  "status"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Order status updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "orders": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "success": {
+                            "type": "boolean",
+                            "example": true
+                          },
+                          "order": {
+                            "$ref": "#/components/schemas/Order"
+                          }
+                        },
+                        "required": [
+                          "success",
+                          "order"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "orders"
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/order/admin-all-orders": {
+      "get": {
+        "tags": [
+          "Order"
+        ],
+        "summary": "Get all orders (Admin)",
+        "responses": {
+          "201": {
+            "description": "Orders retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "orders": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "success": {
+                            "type": "boolean",
+                            "example": true
+                          },
+                          "order": {
+                            "$ref": "#/components/schemas/Order"
+                          }
+                        },
+                        "required": [
+                          "success",
+                          "order"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "orders"
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/shop/create-shop": {
+      "post": {
+        "tags": [
+          "Shop"
+        ],
+        "summary": "Create a new shop",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Example Shop"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "example@example.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "examplePassword123"
+                  },
+                  "address": {
+                    "type": "string",
+                    "example": "123 Example Street, City, Country"
+                  },
+                  "phoneNumber": {
+                    "type": "string",
+                    "example": "+1234567890"
+                  },
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Shop created successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Please check your email to activate your shop!"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/shop/activation": {
+      "post": {
+        "tags": [
+          "Shop"
+        ],
+        "summary": "Activate a shop",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "activation_token": {
+                    "type": "string",
+                    "example": "your_activation_token"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Shop activated successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Shop activated successfully!"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/shop/login-shop": {
+      "post": {
+        "tags": [
+          "Shop"
+        ],
+        "summary": "Login to a shop",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Shop logged in successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "seller": {
+                    "$ref": "#/components/schemas/Shop"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/shop/getSeller": {
+      "get": {
+        "tags": [
+          "Shop"
+        ],
+        "summary": "Get shop information",
+        "responses": {
+          "200": {
+            "description": "Shop information retrieved successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "seller": {
+                    "$ref": "#/components/schemas/Shop"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/shop/logout": {
+      "get": {
+        "tags": [
+          "Shop"
+        ],
+        "summary": "Logout from a shop",
+        "responses": {
+          "201": {
+            "description": "Shop logged out successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Log out successful!"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/shop/get-shop-info/{id}": {
+      "get": {
+        "tags": [
+          "Shop"
+        ],
+        "summary": "Get shop information by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Shop information retrieved successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "shop": {
+                    "$ref": "#/components/schemas/Shop"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/shop/update-shop-avatar": {
+      "put": {
+        "tags": [
+          "Shop"
+        ],
+        "summary": "Update shop profile picture",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "image": {
+                    "type": "string",
+                    "example": "profile.png"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Shop profile picture updated successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "seller": {
+                    "$ref": "#/components/schemas/Shop"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/shop/update-seller-info": {
+      "put": {
+        "tags": [
+          "Shop"
+        ],
+        "summary": "Update seller information",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Gomit"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "The Best Choice Books are here"
+                  },
+                  "address": {
+                    "type": "string",
+                    "example": "Delhi, New Delhi"
+                  },
+                  "phoneNumber": {
+                    "type": "string",
+                    "example": 578764232
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Seller information updated successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "shop": {
+                    "$ref": "#/components/schemas/Shop"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/shop/admin-all-sellers": {
+      "get": {
+        "tags": [
+          "Shop"
+        ],
+        "summary": "Get all sellers (Admin only)",
+        "responses": {
+          "201": {
+            "description": "All sellers retrieved successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "sellers": [
+                    {
+                      "_id": "60f02c39fbc34f002472ff9d",
+                      "name": "Example Shop 1",
+                      "email": "example1@example.com",
+                      "avatar": "https://example.com/avatar1.jpg",
+                      "address": "123 Main Street, Cityville",
+                      "phoneNumber": "+1234567890",
+                      "createdAt": "2021-07-14T12:00:00Z",
+                      "updatedAt": "2021-07-15T10:30:00Z"
+                    },
+                    {
+                      "_id": "60f02c39fbc34f002472ff9e",
+                      "name": "Example Shop 2",
+                      "email": "example2@example.com",
+                      "avatar": "https://example.com/avatar2.jpg",
+                      "address": "456 Park Avenue, Townsville",
+                      "phoneNumber": "+9876543210",
+                      "createdAt": "2021-07-15T09:30:00Z",
+                      "updatedAt": "2021-07-15T11:45:00Z"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/shop/delete-seller/{id}": {
+      "delete": {
+        "tags": [
+          "Shop"
+        ],
+        "summary": "Delete a seller (Admin only)",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Seller deleted successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Seller deleted successfully!"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/product/create-product": {
+      "post": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Create a new product",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "shopId": {
+                    "type": "string",
+                    "example": "60f02c39fbc34f002472ff9d"
+                  },
+                  "images": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "example": [
+                      "https://example.com/image1.jpg",
+                      "https://example.com/image2.jpg"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Product created successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "product": {
+                    "$ref": "#/components/schemas/Product"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/product/get-all-products-shop/{id}": {
+      "get": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Get all products of a shop",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Products retrieved successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "products": [
+                    {
+                      "$ref": "#/components/schemas/Product"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Product"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/product/delete-shop-product/{id}": {
+      "delete": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Delete a product of a shop",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Product deleted successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Product Deleted successfully!"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/product/get-all-products": {
+      "get": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Get all products",
+        "responses": {
+          "201": {
+            "description": "Products retrieved successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "products": [
+                    {
+                      "$ref": "#/components/schemas/Product"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Product"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/product/create-new-review": {
+      "put": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Create a new review for a product",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "user": {
+                    "type": "object",
+                    "$ref": "#/components/schemas/User"
+                  },
+                  "rating": {
+                    "type": "number"
+                  },
+                  "comment": {
+                    "type": "string"
+                  },
+                  "productId": {
+                    "type": "string"
+                  },
+                  "orderId": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Review created successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Reviewed successfully!"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/product/admin-all-products": {
+      "get": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Get all products (Admin)",
+        "responses": {
+          "201": {
+            "description": "Products retrieved successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "products": [
+                    {
+                      "$ref": "#/components/schemas/Product"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Product"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": false
+          },
+          "error": {
+            "type": "string",
+            "example": "Internal Server Error"
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "John Doe"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "john.doe@example.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "securepassword"
+          },
+          "phoneNumber": {
+            "type": "number",
+            "example": 1234567890
+          },
+          "addresses": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "country": {
+                  "type": "string",
+                  "example": "Country"
+                },
+                "city": {
+                  "type": "string",
+                  "example": "City"
+                },
+                "address1": {
+                  "type": "string",
+                  "example": "123 Main St"
+                },
+                "address2": {
+                  "type": "string",
+                  "example": "Apartment 101"
+                },
+                "zipCode": {
+                  "type": "number",
+                  "example": 12345
+                },
+                "addressType": {
+                  "type": "string",
+                  "example": "Home"
+                }
+              }
+            }
+          },
+          "role": {
+            "type": "string",
+            "example": "user"
+          },
+          "avatar": {
+            "type": "string",
+            "example": "https://example.com/avatar.jpg"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-10-08T12:34:56Z"
+          },
+          "resetPasswordToken": {
+            "type": "string",
+            "example": "resetToken"
+          },
+          "resetPasswordTime": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-10-08T12:34:56Z"
+          }
+        }
+      },
+      "Conversation": {
+        "type": "object",
+        "properties": {
+          "groupTitle": {
+            "type": "string",
+            "example": "Group Chat"
+          },
+          "members": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "example": "userId1"
+            }
+          },
+          "lastMessage": {
+            "type": "string",
+            "example": "Last message in the group"
+          },
+          "lastMessageId": {
+            "type": "string",
+            "example": "messageId123"
+          }
+        },
+        "required": [
+          "members"
+        ]
+      },
+      "Messages": {
+        "type": "object",
+        "properties": {
+          "conversationId": {
+            "type": "string",
+            "example": "conversationId123"
+          },
+          "text": {
+            "type": "string",
+            "example": "Hello, how are you?"
+          },
+          "sender": {
+            "type": "string",
+            "example": "userId1"
+          },
+          "images": {
+            "type": "string",
+            "example": "https://example.com/image.jpg"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-10-08T12:34:56Z"
+          }
+        }
+      },
+      "Product": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Product Name"
+          },
+          "description": {
+            "type": "string",
+            "example": "Product Description"
+          },
+          "category": {
+            "type": "string",
+            "example": "Electronics"
+          },
+          "tags": {
+            "type": "string",
+            "example": "Tag1, Tag2"
+          },
+          "originalPrice": {
+            "type": "number",
+            "example": 49.99
+          },
+          "discountPrice": {
+            "type": "number",
+            "example": 39.99
+          },
+          "stock": {
+            "type": "number",
+            "example": 100
+          },
+          "images": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "example": "https://example.com/image1.jpg"
+            }
+          },
+          "reviews": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "user": {
+                  "type": "object",
+                  "example": {
+                    "name": "User Name",
+                    "email": "user@example.com"
+                  }
+                },
+                "rating": {
+                  "type": "number",
+                  "example": 4.5
+                },
+                "comment": {
+                  "type": "string",
+                  "example": "Great product!"
+                },
+                "productId": {
+                  "type": "string",
+                  "example": "productId123"
+                },
+                "createdAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "example": "2023-10-08T12:34:56Z"
+                }
+              }
+            }
+          },
+          "ratings": {
+            "type": "number",
+            "example": 4.5
+          },
+          "shopId": {
+            "type": "string",
+            "example": "shopId123"
+          },
+          "shop": {
+            "type": "object",
+            "example": {
+              "name": "Shop Name",
+              "email": "shop@example.com"
+            }
+          },
+          "sold_out": {
+            "type": "number",
+            "example": 20
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-10-08T12:34:56Z"
+          }
+        }
+      },
+      "Shop": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Shop Name"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "shop@example.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "securepassword"
+          },
+          "description": {
+            "type": "string",
+            "example": "Shop Description"
+          },
+          "address": {
+            "type": "string",
+            "example": "Shop Address"
+          },
+          "phoneNumber": {
+            "type": "number",
+            "example": 1234567890
+          },
+          "role": {
+            "type": "string",
+            "example": "Seller"
+          },
+          "avatar": {
+            "type": "string",
+            "example": "https://example.com/avatar.jpg"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-10-08T12:34:56Z"
+          },
+          "resetPasswordToken": {
+            "type": "string",
+            "example": "resetToken"
+          },
+          "resetPasswordTime": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-10-08T12:34:56Z"
+          }
+        }
+      },
+      "Order": {
+        "type": "object",
+        "properties": {
+          "cart": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "string",
+                  "example": "646bc677c6a2249b7cdaa789"
+                },
+                "name": {
+                  "type": "string",
+                  "example": "Physics Galaxy 2020-21"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "Ak jha When it is your time, it’s your time. There is no point in worrying about what you can’t control."
+                },
+                "category": {
+                  "type": "string",
+                  "example": "Books, Stationery & Art"
+                },
+                "tags": {
+                  "type": "string",
+                  "example": "books, stationery"
+                },
+                "originalPrice": {
+                  "type": "number",
+                  "example": 500
+                },
+                "discountPrice": {
+                  "type": "number",
+                  "example": 200
+                },
+                "stock": {
+                  "type": "number",
+                  "example": 2
+                },
+                "images": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "example": "https://res.cloudinary.com/devthakur/image/upload/v1684784756/products/qrzkfvc4rfsrjvprucza.jpg"
+                  }
+                },
+                "shopId": {
+                  "type": "string",
+                  "example": "646bc602c6a2249b7cdaa77a"
+                },
+                "shop": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "646bc602c6a2249b7cdaa77a"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "Edujock"
+                    },
+                    "email": {
+                      "type": "string",
+                      "format": "email",
+                      "example": "1.edujock@gmail.com"
+                    },
+                    "role": {
+                      "type": "string",
+                      "example": "Seller"
+                    },
+                    "avatar": {
+                      "type": "string",
+                      "example": "https://res.cloudinary.com/devthakur/image/upload/v1684784586/contributor/le2dapzpokgkqfwscpf0.jpg"
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "example": "2023-05-22T18:27:54.780Z"
+                    }
+                  }
+                },
+                "createdAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "example": "2023-05-22T18:27:54.874Z"
+                },
+                "reviews": {
+                  "type": "object"
+                },
+                "qty": {
+                  "type": "number",
+                  "example": 1
+                }
+              }
+            }
+          },
+          "user": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "example": "6470fd2f1eb7fb3c66646e55"
+              },
+              "name": {
+                "type": "string",
+                "example": "Vikram"
+              },
+              "email": {
+                "type": "string",
+                "format": "email",
+                "example": "vavejo7637@introace.com"
+              },
+              "role": {
+                "type": "string",
+                "example": "user"
+              },
+              "avatar": {
+                "type": "string",
+                "example": "https://res.cloudinary.com/devthakur/image/upload/v1685126409/profile/vzrhppgr8inm5qbxs37t.png"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time",
+                "example": "2023-05-26T18:30:45.296Z"
+              },
+              "addresses": {
+                "type": "object"
+              },
+              "phoneNumber": {
+                "type": "number",
+                "example": 23456789
+              }
+            }
+          },
+          "totalPrice": {
+            "type": "number",
+            "example": 2
+          },
+          "status": {
+            "type": "string",
+            "example": ""
+          },
+          "paymentInfo": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "example": "Cash On Delivery"
+              },
+              "status": {
+                "type": "string",
+                "example": "Succeeded"
+              }
+            }
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-10-08T12:34:37.037Z"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "AdminAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-Admin-Auth-Token"
+      },
+      "Auth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-Auth-Token"
+      }
+    }
+  }
+}

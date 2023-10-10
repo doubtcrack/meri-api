@@ -1,0 +1,1793 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "KeelNut API Documentation",
+    "version": "1.0.0",
+    "description": "Welcome to the KeelNut API documentation! KeelNut is a cutting-edge online store\nspecializing in hardware essentials such as nails and screws. Designed with user\nconvenience in mind, KeelNut offers a seamless shopping experience for those\nseeking reliable and quality hardware products.\n\nKey Features:\n  - Intuitive Admin Interface: Streamline product management with the ability to\n    effortlessly add, edit, and remove products.\n  - Smart Categorization System: Organize products into main and subcategories for\n    a convenient and efficient shopping experience.\n  - Insightful Tracking System: Gain valuable insights into user interactions,\n    including likes, wishlists, and comprehensive activity tracking.\n\nGetting Started:\n  Explore the comprehensive API documentation below to integrate seamlessly with\n  KeelNut. Whether you're a developer, partner, or enthusiast, this documentation\n  provides the necessary information to interact with KeelNut's API and unlock its\n  full potential.\n"
+  },
+  "externalDocs": {
+    "description": "Find out more about KeelNut here",
+    "url": "https://tksuryavanshi.blogspot.com/2023/09/keelnut.html?m=1"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5000/",
+      "description": "Local server"
+    },
+    {
+      "url": "https://keelnut-backend.onrender.com/",
+      "description": "Production server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "AdminAuth",
+      "description": "Admin Only Access"
+    },
+    {
+      "name": "UserAuth",
+      "description": "User Access"
+    }
+  ],
+  "paths": {
+    "/api/admin/getusers": {
+      "get": {
+        "tags": [
+          "AdminAuth"
+        ],
+        "summary": "Get information about all users.",
+        "description": "Get information about all users.",
+        "security": [
+          {
+            "AdminAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        },
+        "x-handler": "getAllUsersInfo"
+      }
+    },
+    "/api/admin/geteuser/{userId}": {
+      "get": {
+        "tags": [
+          "AdminAuth"
+        ],
+        "summary": "Get information about a single user.",
+        "description": "Get information about a single user.",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "description": "ID of the user to retrieve",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "AdminAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        },
+        "x-handler": "getSingleUserInfo"
+      }
+    },
+    "/api/admin/getcart/{userId}": {
+      "get": {
+        "tags": [
+          "AdminAuth"
+        ],
+        "summary": "Get the cart details of a user.",
+        "description": "Get the cart details of a user.",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "description": "ID of the user to retrieve cart details for",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "AdminAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        },
+        "x-handler": "getUserCart"
+      }
+    },
+    "/api/admin/getwishlist/{userId}": {
+      "get": {
+        "tags": [
+          "AdminAuth"
+        ],
+        "summary": "Get the wishlist of a user.",
+        "description": "Get the wishlist of a user.",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "description": "ID of the user to retrieve wishlist for",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "AdminAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        },
+        "x-handler": "getUserWishlist"
+      }
+    },
+    "/api/admin/getreview/{userId}": {
+      "get": {
+        "tags": [
+          "AdminAuth"
+        ],
+        "summary": "Get reviews submitted by a user.",
+        "description": "Get reviews submitted by a user.",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "description": "ID of the user to retrieve reviews for",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "AdminAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        },
+        "x-handler": "getUserReview"
+      }
+    },
+    "/api/admin/getorder/{id}": {
+      "get": {
+        "tags": [
+          "AdminAuth"
+        ],
+        "summary": "Get payment details for a specific order.",
+        "description": "Get payment details for a specific order.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the order to retrieve payment details for",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "AdminAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        },
+        "x-handler": "userPaymentDetails"
+      }
+    },
+    "/api/admin/chartdata": {
+      "get": {
+        "tags": [
+          "AdminAuth"
+        ],
+        "summary": "Get chart data.",
+        "description": "Get chart data.",
+        "security": [
+          {
+            "AdminAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        },
+        "x-handler": "chartData"
+      }
+    },
+    "/api/admin/login": {
+      "post": {
+        "tags": [
+          "AdminAuth"
+        ],
+        "summary": "Admin login.",
+        "description": "Admin login.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "example": "admin@example.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "adminpassword"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Invalid request data"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "x-handler": "login"
+      }
+    },
+    "/api/admin/register": {
+      "post": {
+        "tags": [
+          "AdminAuth"
+        ],
+        "summary": "Admin register.",
+        "description": "Admin register.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "firstName": {
+                    "type": "string",
+                    "example": "Amit"
+                  },
+                  "lastName": {
+                    "type": "string",
+                    "example": "Singh"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "example": "admin@example.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "adminpassword"
+                  },
+                  "phoneNumber": {
+                    "type": "string",
+                    "example": 7894492395
+                  },
+                  "key": {
+                    "type": "string",
+                    "example": "youradminkey"
+                  }
+                },
+                "required": [
+                  "firstName",
+                  "lastName",
+                  "email",
+                  "password",
+                  "phoneNumber",
+                  "key"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Invalid request data"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "x-handler": "login"
+      }
+    },
+    "/api/admin/addproduct": {
+      "post": {
+        "tags": [
+          "AdminAuth"
+        ],
+        "summary": "Add a new product.",
+        "description": "Admin-only endpoint to add a new product.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Product"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Invalid request data"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/api/admin/updateproduct/{id}": {
+      "put": {
+        "summary": "Update product details.",
+        "description": "Admin-only endpoint to update details of a product.",
+        "tags": [
+          "AdminAuth"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the product to update",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Invalid request data"
+          }
+        }
+      }
+    },
+    "/api/admin/review/{id}": {
+      "delete": {
+        "tags": [
+          "AdminAuth"
+        ],
+        "summary": "Delete user review",
+        "description": "Admin-only endpoint to delete a user's review.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the review to delete",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Invalid request data"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/api/admin/usercart/{id}": {
+      "delete": {
+        "tags": [
+          "AdminAuth"
+        ],
+        "summary": "Delete user cart item.",
+        "description": "Admin-only endpoint to delete a user's cart item.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the cart item to delete",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Invalid request data"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/api/admin/userwishlist/{id}": {
+      "delete": {
+        "tags": [
+          "AdminAuth"
+        ],
+        "summary": "Delete user wishlist item.",
+        "description": "Admin-only endpoint to delete a user's wishlist item.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the wishlist item to delete",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        }
+      }
+    },
+    "/api/admin/deleteproduct/{id}": {
+      "delete": {
+        "tags": [
+          "AdminAuth"
+        ],
+        "summary": "Delete product.",
+        "description": "Admin-only endpoint to delete a product.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the product to delete",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Invalid request data"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/api/auth/register": {
+      "post": {
+        "tags": [
+          "UserAuth"
+        ],
+        "summary": "User registration.",
+        "description": "User registration.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "firstName": {
+                    "type": "string",
+                    "example": "John"
+                  },
+                  "lastName": {
+                    "type": "string",
+                    "example": "Doe"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "example": "john.doe@example.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "userpassword"
+                  },
+                  "phoneNumber": {
+                    "type": "number",
+                    "example": 1234567890
+                  }
+                },
+                "required": [
+                  "firstName",
+                  "lastName",
+                  "email",
+                  "password",
+                  "phoneNumber"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Invalid request data"
+          }
+        },
+        "x-handler": "register"
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "tags": [
+          "UserAuth"
+        ],
+        "summary": "User login.",
+        "description": "User login.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "example": "user@example.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "userpassword"
+                  }
+                },
+                "required": [
+                  "email",
+                  "password"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Invalid request data"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "x-handler": "login"
+      }
+    },
+    "/api/auth/getuser": {
+      "get": {
+        "tags": [
+          "UserAuth"
+        ],
+        "summary": "Get details of the logged-in user.",
+        "description": "Get details of the logged-in user.",
+        "security": [
+          {
+            "Auth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "x-handler": "getLoggedInUserDetails"
+      }
+    },
+    "/api/auth/updateuser": {
+      "put": {
+        "tags": [
+          "UserAuth"
+        ],
+        "summary": "Update user details.",
+        "description": "Update user details.",
+        "security": [
+          {
+            "Auth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "firstName": {
+                    "type": "string",
+                    "example": "UpdatedJohn"
+                  },
+                  "lastName": {
+                    "type": "string",
+                    "example": "UpdatedDoe"
+                  },
+                  "address": {
+                    "type": "string",
+                    "example": "UpdatedAddress"
+                  },
+                  "zipCode": {
+                    "type": "string",
+                    "example": "UpdatedZipCode"
+                  },
+                  "city": {
+                    "type": "string",
+                    "example": "UpdatedCity"
+                  },
+                  "userState": {
+                    "type": "string",
+                    "example": "UpdatedState"
+                  }
+                },
+                "required": [
+                  "firstName",
+                  "lastName"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Invalid request data"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "x-handler": "updateUserDetails"
+      }
+    },
+    "/api/auth/delete/user/{userId}": {
+      "delete": {
+        "tags": [
+          "UserAuth"
+        ],
+        "summary": "Delete user and associated data.",
+        "description": "Delete user and associated data.",
+        "security": [
+          {
+            "Auth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "description": "ID of the user to delete",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "x-handler": "deleteAllUserData"
+      }
+    },
+    "/api/cart/fetchcart": {
+      "get": {
+        "tags": [
+          "Cart"
+        ],
+        "summary": "Fetch the cart of the logged-in user.",
+        "description": "Fetch the cart of the logged-in user.",
+        "security": [
+          {
+            "Auth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "x-handler": "fetchUserCart"
+      }
+    },
+    "/api/cart/addcart": {
+      "post": {
+        "tags": [
+          "Cart"
+        ],
+        "summary": "Add a product to the user's cart.",
+        "description": "Add a product to the user's cart.",
+        "security": [
+          {
+            "Auth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "productId": {
+                    "type": "string",
+                    "example": "product123"
+                  },
+                  "quantity": {
+                    "type": "number",
+                    "example": 2
+                  }
+                },
+                "required": [
+                  "productId"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Invalid request data"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "x-handler": "addProductToCart"
+      }
+    },
+    "/api/cart/deletecart/{id}": {
+      "delete": {
+        "tags": [
+          "Cart"
+        ],
+        "summary": "Remove a product from the user's cart.",
+        "description": "Remove a product from the user's cart.",
+        "security": [
+          {
+            "Auth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the product to remove from the cart",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "x-handler": "deleteProductFromCart"
+      }
+    },
+    "/api/password/forgot-password": {
+      "post": {
+        "tags": [
+          "Password"
+        ],
+        "summary": "Send an email link for password reset.",
+        "description": "Send an email link for password reset.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "example": "user@example.com"
+                  }
+                },
+                "required": [
+                  "email"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Invalid request data"
+          }
+        },
+        "x-handler": "sendEmailLink"
+      }
+    },
+    "/api/password/forgot-password/{id}/{token}": {
+      "post": {
+        "tags": [
+          "Password"
+        ],
+        "summary": "Set a new password after clicking the email link.",
+        "description": "Set a new password after clicking the email link.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the user",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "in": "path",
+            "required": true,
+            "description": "Token from the email link",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "newPassword": {
+                    "type": "string",
+                    "example": "newpassword"
+                  }
+                },
+                "required": [
+                  "newPassword"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Invalid request data"
+          }
+        },
+        "x-handler": "setNewPassword"
+      }
+    },
+    "/api/password/reset/password": {
+      "post": {
+        "tags": [
+          "Password"
+        ],
+        "summary": "Reset the user's password.",
+        "description": "Reset the user's password.",
+        "security": [
+          {
+            "Auth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "currentPassword": {
+                    "type": "string",
+                    "example": "oldpassword"
+                  },
+                  "newPassword": {
+                    "type": "string",
+                    "example": "newpassword"
+                  }
+                },
+                "required": [
+                  "currentPassword",
+                  "newPassword"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Invalid request data"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "x-handler": "resetPassword"
+      }
+    },
+    "/api/checkout": {
+      "post": {
+        "tags": [
+          "Payment"
+        ],
+        "summary": "Process a payment checkout.",
+        "description": "Process a payment checkout.",
+        "security": [
+          {
+            "Auth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "products": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "productId": {
+                          "type": "string",
+                          "example": "product123"
+                        },
+                        "quantity": {
+                          "type": "number",
+                          "example": 2
+                        }
+                      }
+                    }
+                  },
+                  "totalAmount": {
+                    "type": "number",
+                    "example": 50
+                  }
+                },
+                "required": [
+                  "products",
+                  "totalAmount"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Invalid request data"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "x-handler": "checkout"
+      }
+    },
+    "/api/paymentverification": {
+      "post": {
+        "tags": [
+          "Payment"
+        ],
+        "summary": "Verify a payment.",
+        "description": "Verify a payment.",
+        "security": [
+          {
+            "Auth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "orderId": {
+                    "type": "string",
+                    "example": "order123"
+                  },
+                  "paymentId": {
+                    "type": "string",
+                    "example": "payment123"
+                  },
+                  "signature": {
+                    "type": "string",
+                    "example": "signature123"
+                  }
+                },
+                "required": [
+                  "orderId",
+                  "paymentId",
+                  "signature"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Invalid request data"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "x-handler": "paymentVerification"
+      }
+    },
+    "/api/getkey": {
+      "get": {
+        "tags": [
+          "Payment"
+        ],
+        "summary": "Get the Razorpay API key.",
+        "description": "Get the Razorpay API key.",
+        "security": [
+          {
+            "Auth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "x-handler": "Returns the API key"
+      }
+    },
+    "/api/getpreviousorders": {
+      "get": {
+        "tags": [
+          "Payment"
+        ],
+        "summary": "Get details of the user's previous orders.",
+        "description": "Get details of the user's previous orders.",
+        "security": [
+          {
+            "Auth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "x-handler": "getPreviousOrders"
+      }
+    },
+    "/api/product/fetchproduct": {
+      "get": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Get information about all products.",
+        "description": "Get information about all products.",
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        },
+        "x-handler": "fetchProduct"
+      }
+    },
+    "/api/product/fetchproduct/{id}": {
+      "get": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Get information about a single product by ID.",
+        "description": "Get information about a single product by ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the product to retrieve",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        },
+        "x-handler": "fetchSingleProduct"
+      }
+    },
+    "/api/product/fetchproduct/type": {
+      "post": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Get products for a single category.",
+        "description": "Get products for a single category.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "userType": {
+                    "type": "string",
+                    "example": "electronics"
+                  }
+                },
+                "required": [
+                  "userType"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Invalid request data"
+          }
+        },
+        "x-handler": "fetchProductByType"
+      }
+    },
+    "/api/product/fetchproduct/category": {
+      "post": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Get products category-wise with optional sorting options.",
+        "description": "Get products category-wise with optional sorting options.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "userType": {
+                    "type": "string",
+                    "example": "electronics"
+                  },
+                  "userCategory": {
+                    "type": "string",
+                    "example": "pricelowtohigh"
+                  }
+                },
+                "required": [
+                  "userType"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Invalid request data"
+          }
+        },
+        "x-handler": "fetchProductByCategory"
+      }
+    },
+    "/api/review/fetchreview/{id}": {
+      "post": {
+        "tags": [
+          "Review"
+        ],
+        "summary": "Get reviews for a specific product with optional sorting options.",
+        "description": "Get reviews for a specific product with optional sorting options.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the product to retrieve reviews for",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "filterType": {
+                    "type": "string",
+                    "example": "all"
+                  }
+                },
+                "required": [
+                  "filterType"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Invalid request data"
+          }
+        },
+        "x-handler": "fetchProductReviews"
+      }
+    },
+    "/api/review/addreview": {
+      "post": {
+        "tags": [
+          "Review"
+        ],
+        "summary": "Add a review for a product.",
+        "description": "Add a review for a product.",
+        "security": [
+          {
+            "Auth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "example": "product123"
+                  },
+                  "comment": {
+                    "type": "string",
+                    "example": "Great product!"
+                  },
+                  "rating": {
+                    "type": "number",
+                    "example": 5
+                  }
+                },
+                "required": [
+                  "id",
+                  "comment",
+                  "rating"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Invalid request data"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "x-handler": "addProductReview"
+      }
+    },
+    "/api/review/deletereview/{id}": {
+      "delete": {
+        "tags": [
+          "Review"
+        ],
+        "summary": "Delete a user's review.",
+        "description": "Delete a user's review.",
+        "security": [
+          {
+            "Auth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the review to delete",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "x-handler": "deleteProductReview"
+      }
+    },
+    "/api/review/editreview": {
+      "put": {
+        "tags": [
+          "Review"
+        ],
+        "summary": "Edit a user's review.",
+        "description": "Edit a user's review.",
+        "security": [
+          {
+            "Auth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "example": "review123"
+                  },
+                  "comment": {
+                    "type": "string",
+                    "example": "Updated review comment"
+                  },
+                  "rating": {
+                    "type": "number",
+                    "example": 4
+                  }
+                },
+                "required": [
+                  "id",
+                  "comment",
+                  "rating"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Invalid request data"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "x-handler": "editProductReview"
+      }
+    },
+    "/api/wishlist/fetchwishlist": {
+      "get": {
+        "tags": [
+          "Wishlist"
+        ],
+        "summary": "Get products in the user's wishlist.",
+        "description": "Get products in the user's wishlist.",
+        "security": [
+          {
+            "Auth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "x-handler": "fetchUserWishlist"
+      }
+    },
+    "/api/wishlist/addwishlist": {
+      "post": {
+        "tags": [
+          "Wishlist"
+        ],
+        "summary": "Add a product to the user's wishlist.",
+        "description": "Add a product to the user's wishlist.",
+        "security": [
+          {
+            "Auth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string",
+                    "example": "product123"
+                  }
+                },
+                "required": [
+                  "_id"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Invalid request data"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "x-handler": "addProductToWishlist"
+      }
+    },
+    "/api/wishlist/deletewishlist/{id}": {
+      "delete": {
+        "tags": [
+          "Wishlist"
+        ],
+        "summary": "Remove a product from the user's wishlist.",
+        "description": "Remove a product from the user's wishlist.",
+        "security": [
+          {
+            "Auth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the wishlist item to remove",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "x-handler": "deleteProductFromWishlist"
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "example": "John"
+          },
+          "lastName": {
+            "type": "string",
+            "example": "Doe"
+          },
+          "phoneNumber": {
+            "type": "number",
+            "example": 1234567890
+          },
+          "email": {
+            "type": "string",
+            "example": "john.doe@example.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "securepassword"
+          },
+          "isAdmin": {
+            "type": "boolean",
+            "default": false,
+            "example": false
+          },
+          "address": {
+            "type": "string",
+            "example": "123 Main St"
+          },
+          "zipCode": {
+            "type": "string",
+            "example": 12345
+          },
+          "city": {
+            "type": "string",
+            "example": "Cityville"
+          },
+          "userState": {
+            "type": "string",
+            "example": "Stateville"
+          }
+        },
+        "required": [
+          "firstName",
+          "lastName",
+          "phoneNumber",
+          "email",
+          "password"
+        ],
+        "xml": {
+          "name": "User"
+        }
+      },
+      "Wishlist": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "string",
+            "example": "609c21f825ef6d76e846bdc1"
+          },
+          "productId": {
+            "type": "string",
+            "example": "609c21f825ef6d76e846bdc2"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-10-10T12:30:45Z"
+          }
+        },
+        "xml": {
+          "name": "Wishlist"
+        }
+      },
+      "Cart": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "string",
+            "example": "609c21f825ef6d76e846bdc1"
+          },
+          "productId": {
+            "type": "string",
+            "example": "609c21f825ef6d76e846bdc3"
+          },
+          "quantity": {
+            "type": "number",
+            "example": 2
+          }
+        },
+        "xml": {
+          "name": "Cart"
+        }
+      },
+      "Payment": {
+        "type": "object",
+        "properties": {
+          "razorpay_order_id": {
+            "type": "string",
+            "example": "order_12345"
+          },
+          "razorpay_payment_id": {
+            "type": "string",
+            "example": "pay_67890"
+          },
+          "razorpay_signature": {
+            "type": "string",
+            "example": "signature_abcde"
+          },
+          "productData": {
+            "type": "object",
+            "example": {
+              "productId": "609c21f825ef6d76e846bdc3",
+              "productName": "Example Product"
+            }
+          },
+          "userData": {
+            "type": "object",
+            "example": {
+              "userId": "609c21f825ef6d76e846bdc1",
+              "userName": "John Doe"
+            }
+          },
+          "user": {
+            "type": "string",
+            "example": "609c21f825ef6d76e846bdc1"
+          },
+          "totalAmount": {
+            "type": "number",
+            "example": 100.5
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-10-10T12:30:45Z"
+          }
+        },
+        "required": [
+          "razorpay_order_id",
+          "razorpay_payment_id",
+          "razorpay_signature",
+          "productData",
+          "userData"
+        ],
+        "xml": {
+          "name": "Payment"
+        }
+      },
+      "Product": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Example Product"
+          },
+          "brand": {
+            "type": "string",
+            "example": "Example Brand"
+          },
+          "price": {
+            "type": "number",
+            "example": 29.99
+          },
+          "category": {
+            "type": "string",
+            "example": "Electronics"
+          },
+          "image": {
+            "type": "string",
+            "example": "https://example.com/product-image.jpg"
+          },
+          "rating": {
+            "type": "number",
+            "example": 4.5
+          },
+          "type": {
+            "type": "string",
+            "example": "Gadgets"
+          },
+          "author": {
+            "type": "string",
+            "example": "Author Name"
+          },
+          "description": {
+            "type": "string",
+            "example": "This is an example product description."
+          },
+          "gender": {
+            "type": "string",
+            "example": "Male"
+          }
+        },
+        "xml": {
+          "name": "Product"
+        }
+      },
+      "Review": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "string",
+            "example": "609c21f825ef6d76e846bdc1"
+          },
+          "productId": {
+            "type": "string",
+            "example": "609c21f825ef6d76e846bdc3"
+          },
+          "rating": {
+            "type": "number",
+            "example": 4.5
+          },
+          "comment": {
+            "type": "string",
+            "example": "This is an example review comment."
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-10-10T12:30:45Z"
+          }
+        },
+        "xml": {
+          "name": "Review"
+        }
+      }
+    },
+    "securitySchemes": {
+      "AdminAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-Admin-Auth-Token"
+      },
+      "Auth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-Auth-Token"
+      }
+    }
+  }
+}
