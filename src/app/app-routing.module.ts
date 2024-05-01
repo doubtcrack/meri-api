@@ -5,6 +5,7 @@ import * as cloudinarycrud from './../app/documentation/jsondocs/cloudinarycrud.
 import * as keelnut from './../app/documentation/jsondocs/keelnut.json'
 import * as uniconnect from './../app/documentation/jsondocs/uniconnect.json'
 import * as nextauth from './../app/documentation/jsondocs/nextauth.json'
+import * as unicon from './../app/documentation/jsondocs/unicon.json'
 
 
 import { DocumentationComponent } from './documentation/documentation.component';
@@ -19,6 +20,7 @@ const routesData = [
   { path: 'cloudinarycrud', apidata: cloudinarycrud },
   { path: 'keelnut', apidata: keelnut },
   { path: 'uniconnect', apidata: uniconnect },
+  { path: 'unicon', apidata: unicon },
   { path: 'nextauth', apidata: nextauth },
 ];
 

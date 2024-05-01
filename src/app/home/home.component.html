@@ -69,6 +69,7 @@
     <p>Here are some links to help you get started:</p>
 
     <div class="card-container">
+      <app-card routerLink="/unicon" spanText="Unicon API"></app-card>
       <app-card routerLink="/uniconnect" spanText="UniConnect API"></app-card>
       <app-card routerLink="/keelnut" spanText="KeelNut API"></app-card>
       <app-card
@@ -91,6 +92,23 @@
     <input type="hidden" #selection />
 
     <div class="card-container">
+      <button
+        class="card card-small"
+        (click)="selection.value = 'unicon'"
+        tabindex="0"
+      >
+        <svg
+          class="material-icons"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+        >
+          <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+        </svg>
+        <span>Clone Unicon API</span>
+      </button>
+
       <button
         class="card card-small"
         (click)="selection.value = 'uniconnect'"
@@ -164,8 +182,11 @@
   <!-- Terminal -->
   <div class="terminal" [ngSwitch]="selection.value">
     <pre *ngSwitchDefault>
-git clone https://github.com/doubtcrack/Cloudinary-CRUD-Operations.git</pre
+git clone https://github.com/doubtcrack/unicon.git</pre
     >
+    <pre *ngSwitchCase="'unicon'">
+      git clone https://github.com/doubtcrack/unicon.git</pre
+          >
     <pre *ngSwitchCase="'uniconnect'">
 git clone https://github.com/doubtcrack/uniconnect-server.git</pre
     >
